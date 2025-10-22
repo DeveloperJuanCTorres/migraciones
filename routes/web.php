@@ -5,6 +5,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PowerBIController;
 use App\Http\Controllers\RolController;
+use Illuminate\Support\Facades\Artisan;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,7 +24,16 @@ use App\Http\Controllers\RolController;
 
 Auth::routes();
 
-Route::middleware(['auth'])->group(function(){
+    Route::middleware(['auth'])->group(function(){
+        Route::get('/crear-storage-link', function () {
+        try {
+            Artisan::call('storage:link');
+            return 'Enlace simbólico creado correctamente.';
+        } catch (Exception $e) {
+            return 'Error: ' . $e->getMessage();
+        }
+    });
+
     Route::get('/', [HomeController::class, 'index'])->name('home');
     Route::get('/soporte', [HomeController::class, 'soporte'])->name('soporte');
     Route::get('/especialista', [HomeController::class, 'especialista'])->name('especialista');
