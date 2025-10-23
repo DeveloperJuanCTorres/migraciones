@@ -178,7 +178,7 @@ class PowerBIController extends Controller
 
         $embedTokenMobil = $embedTokenResponseMobil->json()['token'];
 
-        return view('azure', compact('reportId', 'embedUrl', 'embedToken','reportIdMobil', 'embedUrlMobil', 'embedTokenMobil'));
+        return view('soporte', compact('reportId', 'embedUrl', 'embedToken','reportIdMobil', 'embedUrlMobil', 'embedTokenMobil'));
     }
 
     public function especialista()
@@ -265,7 +265,7 @@ class PowerBIController extends Controller
 
         $embedTokenMobil = $embedTokenResponseMobil->json()['token'];
 
-        return view('azure', compact('reportId', 'embedUrl', 'embedToken','reportIdMobil', 'embedUrlMobil', 'embedTokenMobil'));
+        return view('especialista', compact('reportId', 'embedUrl', 'embedToken','reportIdMobil', 'embedUrlMobil', 'embedTokenMobil'));
     }
 
     public function localizacion()
@@ -352,7 +352,7 @@ class PowerBIController extends Controller
 
         $embedTokenMobil = $embedTokenResponseMobil->json()['token'];
 
-        return view('azure', compact('reportId', 'embedUrl', 'embedToken','reportIdMobil', 'embedUrlMobil', 'embedTokenMobil'));
+        return view('localizacion', compact('reportId', 'embedUrl', 'embedToken','reportIdMobil', 'embedUrlMobil', 'embedTokenMobil'));
     }
 
     public function indicador()
@@ -439,7 +439,7 @@ class PowerBIController extends Controller
 
         $embedTokenMobil = $embedTokenResponseMobil->json()['token'];
 
-        return view('azure', compact('reportId', 'embedUrl', 'embedToken','reportIdMobil', 'embedUrlMobil', 'embedTokenMobil'));
+        return view('indicador', compact('reportId', 'embedUrl', 'embedToken','reportIdMobil', 'embedUrlMobil', 'embedTokenMobil'));
     }
 
     public function tickets()
@@ -526,7 +526,7 @@ class PowerBIController extends Controller
 
         $embedTokenMobil = $embedTokenResponseMobil->json()['token'];
 
-        return view('azure', compact('reportId', 'embedUrl', 'embedToken','reportIdMobil', 'embedUrlMobil', 'embedTokenMobil'));
+        return view('tickets', compact('reportId', 'embedUrl', 'embedToken','reportIdMobil', 'embedUrlMobil', 'embedTokenMobil'));
     }
 
     public function kpi()
@@ -613,6 +613,6 @@ class PowerBIController extends Controller
 
         $embedTokenMobil = $embedTokenResponseMobil->json()['token'];
 
-        return view('azure', compact('reportId', 'embedUrl', 'embedToken','reportIdMobil', 'embedUrlMobil', 'embedTokenMobil'));
+        return view('kpi', compact('reportId', 'embedUrl', 'embedToken','reportIdMobil', 'embedUrlMobil', 'embedTokenMobil'));
     }
 }

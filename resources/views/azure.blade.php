@@ -83,14 +83,12 @@
 
 
         <!-- Sale & Revenue Start -->
-         <div class="destock">
+        <div class="destock">
             <div class="m-0" id="reportContainer" style="height: 100vh; min-height: 880px; max-height: 1200px;"></div>
-         </div>
+        </div>
 
-         <div class="mobil">
+        <div class="mobil">
             <div class="m-0" id="reportContainerMobil" style="height: 1200px;"></div>
-         </div>
-
         </div>
         <!-- Sale & Revenue End -->
     </div>

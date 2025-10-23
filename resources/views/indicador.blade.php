@@ -84,27 +84,61 @@
 
         <!-- Sale & Revenue Start -->
         <div class="destock">
-        <iframe title="MESA_DE_SERVICIO_PROACTIVA - PAG1" style="min-height: 860px; max-height: 1920px; width: 100%;"
-        src="https://app.powerbi.com/view?r=eyJrIjoiMDcyZWE1NTUtODlhZS00OTNjLTgzMDktNjhlYjY2YmY2NjU4IiwidCI6IjVmMWIyMGVkLWVlM2QtNDQ3OC05ZDhhLTAwN2I2ZGM2NjRiOCIsImMiOjR9" frameborder="0" allowFullScreen="true"></iframe>
+            <div class="m-0" id="reportContainer" style="height: 100vh; min-height: 880px; max-height: 1200px;"></div>
         </div>
 
         <div class="mobil">
-        <iframe title="MESA_DE_SERVICIO_PROACTIVA - PAG1_celular" style="min-height: 750px; max-height: 800px; width: 100%;"
-         src="https://app.powerbi.com/view?r=eyJrIjoiZWFmZWE1NWEtYzNjYi00OWEyLWJkZDItYWRhYjdhY2QyZTQ4IiwidCI6IjVmMWIyMGVkLWVlM2QtNDQ3OC05ZDhhLTAwN2I2ZGM2NjRiOCIsImMiOjR9" frameborder="0" allowFullScreen="true"></iframe>
-        </div>
-
+            <div class="m-0" id="reportContainerMobil" style="height: 1200px;"></div>
         </div>
         <!-- Sale & Revenue End -->
-
-        <!-- Footer Start -->
-        
-        <!-- Footer End -->
     </div>
     <!-- Content End -->
 
-
-    <!-- Back to Top -->
-    <!-- <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a> -->
 </div>
+
+@push('scripts')
+    <script src="https://cdn.jsdelivr.net/npm/powerbi-client@2.19.1/dist/powerbi.min.js"></script>
+    <script>
+        const models = window['powerbi-client'].models;
+
+        const embedConfig = {
+            type: 'report',
+            id: '{{ $reportId }}',
+            embedUrl: '{{ $embedUrl }}',
+            accessToken: '{{ $embedToken }}',
+            tokenType: models.TokenType.Embed,
+            settings: {
+                panes: {
+                    filters: { visible: false },
+                    pageNavigation: { visible: true }
+                }
+            }
+        };
+
+        const reportContainer = document.getElementById('reportContainer');
+        powerbi.embed(reportContainer, embedConfig);
+    </script>
+
+    <script>
+        const modelsMobil = window['powerbi-client'].models;
+
+        const embedConfigMobil = {
+            type: 'report',
+            id: '{{ $reportIdMobil }}',
+            embedUrl: '{{ $embedUrlMobil }}',
+            accessToken: '{{ $embedTokenMobil }}',
+            tokenType: models.TokenType.Embed,
+            settings: {
+                panes: {
+                    filters: { visible: false },
+                    pageNavigation: { visible: true }
+                }
+            }
+        };
+
+        const reportContainerMobil = document.getElementById('reportContainerMobil');
+        powerbi.embed(reportContainerMobil, embedConfigMobil);
+    </script>
+@endpush
 
 @endsection

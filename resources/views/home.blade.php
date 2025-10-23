@@ -39,7 +39,6 @@
                 </div>
                 <!-- <a href="/azure" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2 icolor"></i>AZURE</a> -->
                 <a href="/" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2 icolor"></i>PRINCIPAL</a>
-                <a href="/azure" class="nav-item nav-link"><i class="fa fa-tachometer-alt me-2 icolor"></i>AZURE</a>
                 <a href="/soporte" class="nav-item nav-link"><i class="fa fa-laptop me-2 icolor"></i>DETALLE</a>
                 <a href="/especialista" class="nav-item nav-link"><i class="fa fa-th me-2 icolor"></i>ESPECIALISTA</a>
                 <a href="/localizacion" class="nav-item nav-link"><i class="fa fa-keyboard me-2 icolor"></i>LOCALIZACIÓN</a>
