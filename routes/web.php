@@ -24,8 +24,8 @@ use Illuminate\Support\Facades\Artisan;
 
 Auth::routes();
 
-    Route::middleware(['auth'])->group(function(){
-        Route::get('/crear-storage-link', function () {
+Route::middleware(['auth'])->group(function(){
+    Route::get('/crear-storage-link', function () {
         try {
             Artisan::call('storage:link');
             return 'Enlace simbólico creado correctamente.';
@@ -34,16 +34,22 @@ Auth::routes();
         }
     });
 
-    Route::get('/', [HomeController::class, 'index'])->name('home');
-    Route::get('/soporte', [HomeController::class, 'soporte'])->name('soporte');
-    Route::get('/especialista', [HomeController::class, 'especialista'])->name('especialista');
-    Route::get('/localizacion', [HomeController::class, 'localizacion'])->name('localizacion');
-    Route::get('/indicador', [HomeController::class, 'indicador'])->name('indicador');
-    Route::get('/tickets', [HomeController::class, 'tickets'])->name('tickets');
-    Route::get('/kpi', [HomeController::class, 'kpi'])->name('kpi');
-    Route::get('/azure', [HomeController::class, 'azure'])->name('azure');
+    // Route::get('/', [HomeController::class, 'index'])->name('home');
+    // Route::get('/soporte', [HomeController::class, 'soporte'])->name('soporte');
+    // Route::get('/especialista', [HomeController::class, 'especialista'])->name('especialista');
+    // Route::get('/localizacion', [HomeController::class, 'localizacion'])->name('localizacion');
+    // Route::get('/indicador', [HomeController::class, 'indicador'])->name('indicador');
+    // Route::get('/tickets', [HomeController::class, 'tickets'])->name('tickets');
+    // Route::get('/kpi', [HomeController::class, 'kpi'])->name('kpi');
+    // Route::get('/azure', [HomeController::class, 'azure'])->name('azure');
     
-    Route::get('/azure', [PowerBIController::class, 'showReport']);
+    Route::get('/', [PowerBIController::class, 'principal']);
+    Route::get('/soporte', [PowerBIController::class, 'soporte'])->name('soporte');
+    Route::get('/especialista', [PowerBIController::class, 'especialista'])->name('especialista');
+    Route::get('/localizacion', [PowerBIController::class, 'localizacion'])->name('localizacion');
+    Route::get('/indicador', [PowerBIController::class, 'indicador'])->name('indicador');
+    Route::get('/tickets', [PowerBIController::class, 'tickets'])->name('tickets');
+    Route::get('/kpi', [PowerBIController::class, 'kpi'])->name('kpi');
 
     //USERS
     Route::get('users', [UserController::class, 'index'])->name('users.index');

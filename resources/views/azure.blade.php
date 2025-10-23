@@ -37,7 +37,6 @@
                         <a href="/roles" class="dropdown-item">Roles</a>
                     </div>
                 </div>
-                <a href="/azure" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2 icolor"></i>AZURE</a>
                 <a href="/" class="nav-item nav-link"><i class="fa fa-tachometer-alt me-2 icolor"></i>PRINCIPAL</a>
                 <a href="/soporte" class="nav-item nav-link"><i class="fa fa-laptop me-2 icolor"></i>DETALLE</a>
                 <a href="/especialista" class="nav-item nav-link"><i class="fa fa-th me-2 icolor"></i>ESPECIALISTA</a>
@@ -92,25 +91,8 @@
             <div class="m-0" id="reportContainerMobil" style="height: 1200px;"></div>
          </div>
 
-
-        <!-- <div class="m-0" id="reportContainer" style="width: 100vw;height: 1200px;"></div> -->
-
-        <!-- <div class="destock">
-        <iframe title="MESA_DE_SERVICIO_PROACTIVA - PAG1" style="min-height: 860px; max-height: 1920px; width: 100%;"
-        src="https://app.powerbi.com/view?r=eyJrIjoiOWM5YWQ1MTctNjAzZi00NzUwLTllYWUtYmY1ZTVjNThiOTYwIiwidCI6IjVmMWIyMGVkLWVlM2QtNDQ3OC05ZDhhLTAwN2I2ZGM2NjRiOCIsImMiOjR9" frameborder="0" allowFullScreen="true"></iframe>
-        </div> -->
-
-        <!-- <div class="mobil">
-        <iframe title="MESA_DE_SERVICIO_PROACTIVA - PAG1_celular" style="min-height: 750px; max-height: 800px; width: 100%;"
-         src="https://app.powerbi.com/view?r=eyJrIjoiZWFmZWE1NWEtYzNjYi00OWEyLWJkZDItYWRhYjdhY2QyZTQ4IiwidCI6IjVmMWIyMGVkLWVlM2QtNDQ3OC05ZDhhLTAwN2I2ZGM2NjRiOCIsImMiOjR9" frameborder="0" allowFullScreen="true"></iframe>
-        </div> -->
-
         </div>
         <!-- Sale & Revenue End -->
-
-        <!-- Footer Start -->
-        
-        <!-- Footer End -->
     </div>
     <!-- Content End -->
 
