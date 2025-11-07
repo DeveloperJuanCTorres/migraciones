@@ -21,12 +21,12 @@ class UserController extends Controller
         if ($request->ajax()) {
             return DataTables::of(User::query())
                 ->addColumn('action', function ($user) {
-                    $editUrl = route('users.edit', $user->id);
-                    $deleteUrl = route('users.destroy', $user->id);
 
                     return '
-                        <a href="' . $editUrl . '" class="btn btn-sm btn-info me-1"><i class="fas fa-edit me-1"></i>Editar</a>
-                        <button id="delet" class="btn btn-sm btn-danger eliminar" data-id="' . $user->id . '"><i class="fas fa-trash me-1"></i>Eliminar</button>
+                        <button class="btn btn-sm btn-info editar" data-id="' . $user->id . '">
+                            <i class="fas fa-edit me-1"></i>Editar</button>
+
+                        <button class="btn btn-sm btn-danger eliminar" data-id="' . $user->id . '"><i class="fas fa-trash me-1"></i>Eliminar</button>
                         
                     ';
                 })
@@ -51,10 +51,43 @@ class UserController extends Controller
                 'email' => $request->email,
                 'password' => Hash::make($request->password),
             ]);
-            return response()->json(['status' => true, 'msg' => 'Usuario registrado con éxito']);
+            return response()->json(['status' => true, 'msg' => 'Usuario registrado']);
         } catch (\Throwable $th) {
             return response()->json(['status' => false, 'msg' => $th->getMessage()]);
         }        
+    }
+
+    public function getUser($id)
+    {
+        $user = User::findOrFail($id);
+        return response()->json($user);
+    }
+
+    public function updateUser(Request $request, $id)
+    {
+        try {
+            $user = User::findOrFail($id);
+
+            $request->validate([
+                'name'  => 'required|string|max:255',
+                'email' => 'required|email|unique:users,email,' . $user->id,
+                'password' => 'nullable|string|min:6',
+            ]);
+
+            $user->name  = $request->name;
+            $user->email = $request->email;
+
+            if ($request->filled('password')) {
+                $user->password = Hash::make($request->password);
+            }
+
+            $user->save();
+
+            return response()->json(['status' => true, 'msg' => 'Usuario actualizado']);
+
+        } catch (\Throwable $th) {
+            return response()->json(['status' => false, 'msg' => $th->getMessage()]);
+        }
     }
 
     public function update(Request $request)
@@ -92,12 +125,25 @@ class UserController extends Controller
 
             $user->save();
 
-            return response()->json(['status' => true, 'msg' => 'Usuario registrado con éxito']);
+            return response()->json(['status' => true, 'msg' => 'Usuario actualizado']);
 
         } catch (\Throwable $th) {
             return response()->json(['status' => false, 'msg' => $th->getMessage()]);
         }
         
+    }
+
+    public function deleteUser($id)
+    {
+        try {
+            $user = User::findOrFail($id);
+            $user->delete();
+
+            return response()->json(['status' => true, 'msg' => 'Usuario eliminado']);
+
+        } catch (\Throwable $th) {
+            return response()->json(['status' => false, 'msg' => $th->getMessage()]);
+        }
     }
 
     public function perfil()

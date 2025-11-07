@@ -12,74 +12,13 @@
     <!-- Spinner End -->
 
 
-    <!-- Sidebar Start -->
-    <div class="sidebar pe-4 pb-3">
-        <nav class="navbar bg-secondary navbar-dark">
-            <a href="index.html" class="navbar-brand mx-4 mb-3">
-            <img src="{{asset('assets/img/migraciones.png')}}" alt="" style="height: 60px;">
-                <!-- <h3 class="text-primary"><i class="fa fa-user-edit me-2"></i>DarkPan</h3> -->
-            </a>
-            <!-- <div class="d-flex align-items-center ms-4 mb-4">
-                <div class="position-relative">
-                    <img class="rounded-circle" src="{{asset('assets/img/user.jpg')}}" alt="" style="width: 40px; height: 40px;">
-                    <div class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
-                </div>
-                <div class="ms-3">
-                    <h6 class="mb-0">Auth::user()->name</h6>
-                    <span>Admin</span>
-                </div>
-            </div> -->
-            <div class="navbar-nav w-100">
-                <div class="nav-item dropdown">
-                    <a href="#" class="nav-item nav-link dropdown-toggle active" data-bs-toggle="dropdown"><i class="fa fa-users me-2"></i>USUARIOS</a>
-                    <div class="dropdown-menu bg-transparent border-0">
-                        <a href="/users" class="dropdown-item">Usuarios</a>
-                        <a href="/roles" class="dropdown-item">Roles</a>
-                    </div>
-                </div>
-                <a href="/" class="nav-item nav-link"><i class="fa fa-tachometer-alt me-2 icolor"></i>PRINCIPAL</a>
-                <a href="/soporte" class="nav-item nav-link"><i class="fa fa-laptop me-2 icolor"></i>DETALLE</a>
-                <a href="/especialista" class="nav-item nav-link"><i class="fa fa-th me-2 icolor"></i>ESPECIALISTA</a>
-                <a href="/localizacion" class="nav-item nav-link"><i class="fa fa-keyboard me-2 icolor"></i>LOCALIZACIÓN</a>
-                <a href="/indicador" class="nav-item nav-link"><i class="fa fa-table me-2 icolor"></i>INDICADOR</a>
-                <a href="/tickets" class="nav-item nav-link"><i class="fa fa-chart-bar me-2 icolor"></i>TICKETS</a>
-                <a href="/kpi" class="nav-item nav-link"><i class="far fa-file-alt me-2 icolor"></i>KPI</a>
-            
-            </div>
-        </nav>
-    </div>
-    <!-- Sidebar End -->
+    @include('partials.menu')
 
 
     <!-- Content Start -->
     <div class="content content-wrapper">
-        <!-- Navbar Start -->
-        <nav class="navbar navbar-expand bg-secondary navbar-dark sticky-top px-4 py-0">
-            <a href="/" class="navbar-brand d-flex d-lg-none me-4">
-                <img src="{{asset('assets/img/migraciones-min.png')}}" alt="" style="height: 60px;">
-            </a>
-            <a href="#" class="sidebar-toggler flex-shrink-0">
-                <i class="fa fa-bars"></i>
-            </a>
-            <div class="navbar-nav align-items-center ms-auto">
-                
-                <div class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                        <img class="rounded-circle me-lg-2" src="{{asset('storage/perfiles/'. auth()->user()->image)}}" alt="" style="width: 40px; height: 40px;">
-                        <span class="d-none d-lg-inline-flex">{{Auth::user()->name}}</span>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-end bg-secondary border-0 rounded-0 rounded-bottom m-0">
-                        <a href="/perfil" class="dropdown-item">Perfil</a>
-                        <a href="#" class="dropdown-item">Configuración</a>
-                        <form method="POST" action="{{ route('logout') }}" x-data>
-                            @csrf
-                            <input style="color: white;" type="submit" class="dropdown-item" value="Cerrar sesion">
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </nav>
-        <!-- Navbar End -->
+        
+        @include('partials.navbar')
 
 
         <!-- Sale & Revenue Start -->
@@ -166,6 +105,44 @@
             </div>
         </div>
         <!-- END MODAL -->
+
+        <!-- MODAL EDITAR -->
+         <div class="modal fade" id="modalEditar" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                <form id="formEditar">
+                    @csrf
+                    <div class="modal-header">
+                    <h5 class="modal-title">Editar Usuario</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+
+                    <input type="hidden" id="edit_id">
+
+                    <div class="mb-3">
+                        <label>Nombre</label>
+                        <input type="text" id="edit_name" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label>Email</label>
+                        <input type="email" id="edit_email" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label>Contraseña (opcional)</label>
+                        <input type="password" id="edit_password" class="form-control">
+                    </div>
+
+                    </div>
+                    <div class="modal-footer">
+                    <button type="submit" class="btn btn-principal">Actualizar</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    </div>
+                </form>
+                </div>
+            </div>
+        </div>
+        <!-- FIN MODAL EDITAR -->
 
         <!-- Footer Start -->
         
@@ -486,152 +463,48 @@
         });
     }) 
 </script>
-<!-- <script>
-    let token = $('meta[name="csrf-token"]').attr('content');
-    $(function(){
-        $(".registrar").on('click',function () {
-            var nombre = $("#nombre").val();
-            var apellidos = $("#apellidos").val();
-            var name = nombre + " " + apellidos;
-            var email = $("#email").val();
-            var password = $("#password").val();
 
-            if (nombre == '') {
-                const Toast = Swal.mixin({
-                toast: true,
-                position: "top-end",
-                showConfirmButton: false,
-                timer: 3000,
-                timerProgressBar: true,
-                didOpen: (toast) => {
-                    toast.onmouseenter = Swal.stopTimer;
-                    toast.onmouseleave = Swal.resumeTimer;
-                }
-                });
-                Toast.fire({
-                icon: "warning",
-                title: "El nombre es requerido"
-                });
-                $('#nombre').focus();
-                return false;
-            }
-            if (apellidos == '') {
-                const Toast = Swal.mixin({
-                toast: true,
-                position: "top-end",
-                showConfirmButton: false,
-                timer: 3000,
-                timerProgressBar: true,
-                didOpen: (toast) => {
-                    toast.onmouseenter = Swal.stopTimer;
-                    toast.onmouseleave = Swal.resumeTimer;
-                }
-                });
-                Toast.fire({
-                icon: "warning",
-                title: "Los apellidos son requeridos"
-                });
-                $('#apellidos').focus();
-                return false;
-            }
-            if (email == '') {
-                const Toast = Swal.mixin({
-                toast: true,
-                position: "top-end",
-                showConfirmButton: false,
-                timer: 3000,
-                timerProgressBar: true,
-                didOpen: (toast) => {
-                    toast.onmouseenter = Swal.stopTimer;
-                    toast.onmouseleave = Swal.resumeTimer;
-                }
-                });
-                Toast.fire({
-                icon: "warning",
-                title: "El email es requerido"
-                });
-                $('#email').focus();
-                return false;
-            }
-            if (password == '') {
-                const Toast = Swal.mixin({
-                toast: true,
-                position: "top-end",
-                showConfirmButton: false,
-                timer: 3000,
-                timerProgressBar: true,
-                didOpen: (toast) => {
-                    toast.onmouseenter = Swal.stopTimer;
-                    toast.onmouseleave = Swal.resumeTimer;
-                }
-                });
-                Toast.fire({
-                icon: "warning",
-                title: "La contraseña es requerida"
-                });
-                $('#password').focus();
-                return false;
-            }
+<script>
+    // Abrir modal y cargar usuario
+    $(document).on('click', '.editar', function() {
+        let id = $(this).data('id');
+        
+        $.get('/users/getUser/' + id, function(user) {
+            $('#edit_id').val(user.id);
+            $('#edit_name').val(user.name);
+            $('#edit_email').val(user.email);
+            $('#edit_password').val('');
 
-            Swal.fire({
-                header: '...',
-                title: 'loading...',
-                allowOutsideClick:false,
-                didOpen: () => {
-                    Swal.showLoading()
-                }
-            });
+            $('#modalEditar').modal('show');
+        });
+    });
 
-            $.ajax({
-                url: "/adduser",
-                method: "post",
-                dataType: 'json',
-                data: {
-                    _token: token,
-                    name: name,
-                    email: email,
-                    password: password
-                },
-                success: function (response) {   
-                    if (response.status) {
-                        const Toast = Swal.mixin({
-                        toast: true,
-                        position: "top-end",
-                        showConfirmButton: false,
-                        timer: 3000,
-                        timerProgressBar: true,
-                        didOpen: (toast) => {
-                            toast.onmouseenter = Swal.stopTimer;
-                            toast.onmouseleave = Swal.resumeTimer;
-                        }
-                        });
-                        Toast.fire({
-                        icon: "success",
-                        title: response.msg
-                        });
-                        table.ajax.reload();
-                        return false;                 
-                    } else {
-                        const Toast = Swal.mixin({
-                        toast: true,
-                        position: "top-end",
-                        showConfirmButton: false,
-                        timer: 3000,
-                        timerProgressBar: true,
-                        didOpen: (toast) => {
-                            toast.onmouseenter = Swal.stopTimer;
-                            toast.onmouseleave = Swal.resumeTimer;
-                        }
-                        });
-                        Toast.fire({
-                        icon: "error",
-                        title: response.msg
-                        });
-                        return false;
-                    }
-                },
-                error: function (response) {
-                    const Toast = Swal.mixin({
+    // Guardar cambios
+    $('#formEditar').submit(function(e){
+        e.preventDefault();
+
+        let id = $('#edit_id').val();
+        let data = {
+            name: $('#edit_name').val(),
+            email: $('#edit_email').val(),
+            password: $('#edit_password').val(),
+            _token: $('input[name="_token"]').val()
+        };
+
+        Swal.fire({
+            header: '...',
+            title: 'loading...',
+            allowOutsideClick:false,
+            didOpen: () => {
+                Swal.showLoading()
+            }
+        });
+
+        $.post('/users/updateUser/' + id, data, function(response) {
+            if(response.status) {
+                $('#modalEditar').modal('hide');
+
+                const Toast = Swal.mixin({
                     toast: true,
                     position: "top-end",
                     showConfirmButton: false,
@@ -641,17 +514,74 @@
                         toast.onmouseenter = Swal.stopTimer;
                         toast.onmouseleave = Swal.resumeTimer;
                     }
-                    });
-                    Toast.fire({
-                    icon: "error",
-                    title: response.msg
-                    });
-                    return false;
-                }
-            });
+                });
+                Toast.fire({
+                icon: "success",
+                title: response.msg
+                });
+                table.ajax.reload();
+                return false;  
+            } else {
+                alert('Error: ' + response.msg);
+            }
         });
-    })
-</script> -->
+    });
+</script>
+
+<script>
+    // Eliminar usuario
+    $(document).on('click', '.eliminar', function() {
+        let id = $(this).data('id');
+
+        Swal.fire({
+            title: '¿Estás seguro?',
+            text: "Esta acción no se puede revertir",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Sí, eliminar',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                
+                $.ajax({
+                    url: "/users/deleteUser/" + id,
+                    type: "POST",
+                    data: {
+                        _token: $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function(response) {
+                        if(response.status) {
+                            const Toast = Swal.mixin({
+                                toast: true,
+                                position: "top-end",
+                                showConfirmButton: false,
+                                timer: 3000,
+                                timerProgressBar: true,
+                                didOpen: (toast) => {
+                                    toast.onmouseenter = Swal.stopTimer;
+                                    toast.onmouseleave = Swal.resumeTimer;
+                                }
+                            });
+                            Toast.fire({
+                            icon: "success",
+                            title: response.msg
+                            });
+                            table.ajax.reload();
+                            return false; 
+                        } else {
+                            Swal.fire('Error', response.msg, 'error');
+                        }
+                    },
+                    error: function(xhr) {
+                        Swal.fire('Error', 'No se pudo eliminar', 'error');
+                    }
+                });
+
+            }
+        });
+    });
+</script>
+
 @endpush
 
 @endsection

@@ -12,66 +12,13 @@
     <!-- Spinner End -->
 
 
-    <!-- Sidebar Start -->
-    <div class="sidebar pe-4 pb-3">
-        <nav class="navbar bg-secondary navbar-dark">
-            <a href="index.html" class="navbar-brand mx-4 mb-3">
-            <img src="{{asset('assets/img/migraciones.png')}}" alt="" style="height: 60px;">
-                <!-- <h3 class="text-primary"><i class="fa fa-user-edit me-2"></i>DarkPan</h3> -->
-            </a>
-            
-            <div class="navbar-nav w-100">
-                <div class="nav-item dropdown">
-                    <a href="#" class="nav-item nav-link dropdown-toggle active" data-bs-toggle="dropdown"><i class="fa fa-users me-2"></i>Usuarios</a>
-                    <div class="dropdown-menu bg-transparent border-0">
-                        <a href="/users" class="dropdown-item">Usuarios</a>
-                        <a href="/roles" class="dropdown-item">Roles</a>
-                    </div>
-                </div>
-            
-                <a href="/" class="nav-item nav-link"><i class="fa fa-tachometer-alt me-2 icolor"></i>PRINCIPAL</a>
-                <a href="/soporte" class="nav-item nav-link"><i class="fa fa-laptop me-2 icolor"></i>DETALLE</a>
-                <a href="/especialista" class="nav-item nav-link"><i class="fa fa-th me-2 icolor"></i>ESPECIALISTA</a>
-                <a href="/localizacion" class="nav-item nav-link"><i class="fa fa-keyboard me-2 icolor"></i>LOCALIZACIÓN</a>
-                <a href="/indicador" class="nav-item nav-link"><i class="fa fa-table me-2 icolor"></i>INDICADOR</a>
-                <a href="/tickets" class="nav-item nav-link"><i class="fa fa-chart-bar me-2 icolor"></i>TICKETS</a>
-                <a href="/kpi" class="nav-item nav-link"><i class="far fa-file-alt me-2 icolor"></i>KPI</a>
-            
-            </div>
-        </nav>
-    </div>
-    <!-- Sidebar End -->
+    @include('partials.menu')
 
 
     <!-- Content Start -->
     <div class="content">
-        <!-- Navbar Start -->
-        <nav class="navbar navbar-expand bg-secondary navbar-dark sticky-top px-4 py-0">
-            <a href="/" class="navbar-brand d-flex d-lg-none me-4">
-                <img src="{{asset('assets/img/migraciones-min.png')}}" alt="" style="height: 60px;">
-            </a>
-            <a href="#" class="sidebar-toggler flex-shrink-0">
-                <i class="fa fa-bars"></i>
-            </a>
-            <div class="navbar-nav align-items-center ms-auto">
-                
-                <div class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                        <img class="rounded-circle me-lg-2" src="{{asset('storage/perfiles/'. auth()->user()->image)}}" alt="" style="width: 40px; height: 40px;">
-                        <span class="d-none d-lg-inline-flex">{{Auth::user()->name}}</span>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-end bg-secondary border-0 rounded-0 rounded-bottom m-0">
-                        <a href="#" class="dropdown-item">Perfil</a>
-                        <a href="#" class="dropdown-item">Configuración</a>
-                        <form method="POST" action="{{ route('logout') }}" x-data>
-                            @csrf
-                            <input type="submit" class="dropdown-item" value="Cerrar sesion">
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </nav>
-        <!-- Navbar End -->
+        
+        @include('partials.navbar')
 
 
         <!-- Sale & Revenue Start -->
@@ -108,16 +55,10 @@
             </div>
         </section>
         <!-- Sale & Revenue End -->
-
-        <!-- Footer Start -->
-        
-        <!-- Footer End -->
     </div>
     <!-- Content End -->
 
 
-    <!-- Back to Top -->
-    <!-- <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a> -->
 </div>
 
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
