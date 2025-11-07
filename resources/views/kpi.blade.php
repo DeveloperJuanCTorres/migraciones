@@ -26,7 +26,7 @@
         </div>
 
         <div class="mobil">
-            <div class="m-0" id="reportContainerMobil" style="height: 1500px;"></div>
+            <div class="m-0" id="reportContainerMobil" style="height: 1900px;"></div>
         </div>
         <!-- Sale & Revenue End -->
     </div>
