@@ -36,11 +36,6 @@ class UserController extends Controller
 
         // Si no es AJAX, redirecciona (esto evita errores en acceso directo)
         return redirect()->route('users.index');
-
-        // <form action="' . $deleteUrl . '" method="POST" style="display:inline-block;" onsubmit="return confirm(\'¿Estás seguro de eliminar este usuario?\')">
-        //     ' . csrf_field() . method_field('DELETE') . '
-        //     <button type="submit" class="btn btn-sm btn-danger"><i class="fas fa-trash me-1"></i>Eliminar</button>
-        // </form>
     }
 
     public function adduser(Request $request)
