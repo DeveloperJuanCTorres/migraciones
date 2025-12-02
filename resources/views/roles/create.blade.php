@@ -45,20 +45,54 @@
                     <br>
                     <h5 class="box-title">Permisos</h5>
                     <br>
-                    <div class="mb-3">
-                        <label for="exampleInputPassword1" class="form-label">Gestión de Usuarios</label>
+                    <!-- <div class="mb-3">
+                        <label for="exampleInputPassword1" class="form-label">Configuración</label>
                         <ul>
                             <li>
-                                <input type="checkbox" id="users" value="1">
+                                <input type="checkbox" name="permisos[]" value="ver_menus">
+                                <label for="">Dashboards</label>
+                            </li>
+                            <li>
+                                <input type="checkbox" name="permisos[]" value="ver_usuarios">
                                 <label for="">Usuarios</label>
                             </li>
                             <li>
-                                <input type="checkbox" id="roles" value="1">
+                                <input type="checkbox" name="permisos[]" value="ver_roles">
                                 <label for="">Roles</label>
                             </li>
                         </ul>                        
-                    </div>
+                    </div> -->
+
+
+                    
+                    @foreach($menus as $menu)
                     <div class="mb-3">
+                        <label class="form-label">
+                            {{ ucfirst($menu->nombre) }} 
+                            @if($menu->tipo == 'sistema')
+                                (Sistema)
+                            @else
+                                (Dashboard)
+                            @endif
+                        </label>
+
+                        <ul>
+                            <li>
+                                <input 
+                                    type="checkbox" 
+                                    name="permisos[]" 
+                                    value="ver_{{ $menu->id }}" 
+                                    id="menu_{{ $menu->id }}"
+                                >
+                                <label for="menu_{{ $menu->id }}">Ver</label>
+                            </li>
+                        </ul>
+                    </div>
+                    @endforeach
+
+
+
+                    <!-- <div class="mb-3">
                         <label for="exampleInputPassword1" class="form-label">Vista PRINCIPAL</label>
                         <ul>
                             <li>
@@ -120,7 +154,7 @@
                                 <label for="">Ver</label>
                             </li>
                         </ul>                        
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </section>
@@ -142,97 +176,34 @@
 </script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script>  
-    $(function(){
-        $(".actualizar").on('click',function () {
-            let token = $('meta[name="csrf-token"]').attr('content');
-            let formData = new FormData();
 
-            formData.append("_token", token);
-            formData.append("name", $("#name").val());
-            formData.append("email", $("#email").val());
-            formData.append("password", $("#password").val());
+<script>
+    $('.actualizar').on('click', function() {
 
-            // Adjuntar archivo si se seleccionó
-            let fileInput = $('#image')[0];
-            if (fileInput.files.length > 0) {
-                formData.append("image", fileInput.files[0]);
-            }          
-            
-            Swal.fire({
-                header: '...',
-                title: 'loading...',
-                allowOutsideClick:false,
-                didOpen: () => {
-                    Swal.showLoading()
-                }
-            });
+        let name = $('#name').val();
 
-            $.ajax({
-                url: perfilUpdateUrl,
-                method: "post",
-                dataType: 'json',
-                data: formData,
-                processData: false,
-                contentType: false,
-                success: function (response) {   
-                    if (response.status) {
-                        const Toast = Swal.mixin({
-                        toast: true,
-                        position: "top-end",
-                        showConfirmButton: false,
-                        timer: 3000,
-                        timerProgressBar: true,
-                        didOpen: (toast) => {
-                            toast.onmouseenter = Swal.stopTimer;
-                            toast.onmouseleave = Swal.resumeTimer;
-                        }
-                        });
-                        Toast.fire({
-                        icon: "success",
-                        title: response.msg
-                        });
-                        return false;                 
-                    } else {
-                        const Toast = Swal.mixin({
-                        toast: true,
-                        position: "top-end",
-                        showConfirmButton: false,
-                        timer: 3000,
-                        timerProgressBar: true,
-                        didOpen: (toast) => {
-                            toast.onmouseenter = Swal.stopTimer;
-                            toast.onmouseleave = Swal.resumeTimer;
-                        }
-                        });
-                        Toast.fire({
-                        icon: "error",
-                        title: response.msg
-                        });
-                        return false;
-                    }
-                },
-                error: function (response) {
-                    const Toast = Swal.mixin({
-                    toast: true,
-                    position: "top-end",
-                    showConfirmButton: false,
-                    timer: 3000,
-                    timerProgressBar: true,
-                    didOpen: (toast) => {
-                        toast.onmouseenter = Swal.stopTimer;
-                        toast.onmouseleave = Swal.resumeTimer;
-                    }
-                    });
-                    Toast.fire({
-                    icon: "error",
-                    title: response.msg
-                    });
-                    return false;
-                }
-            });
+        let permisos = [];
+        $('input[name="permisos[]"]:checked').each(function() {
+            permisos.push($(this).val());
         });
-    })
+
+        $.ajax({
+            url: perfilUpdateUrl,
+            type: 'POST',
+            data: {
+                name: name,
+                permisos: permisos,
+                _token: '{{ csrf_token() }}'
+            },
+            success: function(response) {
+                Swal.fire('Éxito', 'Rol registrado correctamente', 'success');
+            },
+            error: function(xhr) {
+                Swal.fire('Error', 'No se pudo guardar', 'error');
+            }
+        });
+
+    });
 </script>
 
 @endsection

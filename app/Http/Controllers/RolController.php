@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Role;
+use App\Models\Menu;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
@@ -42,6 +44,33 @@ class RolController extends Controller
 
     public function create()
     {
-        return view('roles.create');
+
+        $menus = Menu::all();
+        return view('roles.create', compact('menus'));
+    }
+
+    public function store(Request $request)
+    {
+        // Validar
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'permisos' => 'array',
+        ]);
+
+        // Crear el rol
+        $role = Role::create(['name' => $request->name]);
+
+        // Crear los permisos si no existen
+        foreach ($request->permisos as $permiso) {
+            Permission::firstOrCreate([
+                'name' => $permiso,
+                'guard_name' => 'web'
+            ]);
+        }
+
+        // Asignar permisos al rol
+        $role->syncPermissions($request->permisos);
+
+        return response()->json(['message' => 'Rol creado correctamente']);
     }
 }

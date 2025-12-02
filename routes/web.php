@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\MenuController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PowerBIController;
 use App\Http\Controllers\RolController;
@@ -43,24 +44,24 @@ Route::middleware(['auth'])->group(function(){
     // Route::get('/kpi', [HomeController::class, 'kpi'])->name('kpi');
     // Route::get('/azure', [HomeController::class, 'azure'])->name('azure');
     
-    Route::get('/', [PowerBIController::class, 'principal']);
-    Route::get('/soporte', [PowerBIController::class, 'soporte'])->name('soporte');
-    Route::get('/especialista', [PowerBIController::class, 'especialista'])->name('especialista');
-    Route::get('/localizacion', [PowerBIController::class, 'localizacion'])->name('localizacion');
-    Route::get('/indicador', [PowerBIController::class, 'indicador'])->name('indicador');
-    Route::get('/tickets', [PowerBIController::class, 'tickets'])->name('tickets');
-    Route::get('/kpi', [PowerBIController::class, 'kpi'])->name('kpi');
+    Route::get('/', [PowerBIController::class, 'principal'])->middleware('can:ver_6');
+    Route::get('/soporte', [PowerBIController::class, 'soporte'])->middleware('can:ver_7')->name('soporte');
+    Route::get('/especialista', [PowerBIController::class, 'especialista'])->middleware('can:ver_8')->name('especialista');
+    Route::get('/localizacion', [PowerBIController::class, 'localizacion'])->middleware('can:ver_9')->name('localizacion');
+    Route::get('/indicador', [PowerBIController::class, 'indicador'])->middleware('can:ver_10')->name('indicador');
+    Route::get('/tickets', [PowerBIController::class, 'tickets'])->middleware('can:ver_11')->name('tickets');
+    Route::get('/kpi', [PowerBIController::class, 'kpi'])->middleware('can:ver_12')->name('kpi');
 
     //USERS
     Route::get('users', [UserController::class, 'index'])->name('users.index');
     Route::get('users/data', [UserController::class, 'getData'])->name('users.data');
     // Route::get('users/{user}/edit', [UserController::class, 'edit'])->name('users.edit');
-    Route::delete('users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
-    Route::post('adduser', [UserController::class, 'adduser'])->name('adduser');
+    Route::delete('users/{user}', [UserController::class, 'destroy'])->middleware('can:ver_4')->name('users.destroy');
+    Route::post('adduser', [UserController::class, 'adduser'])->middleware('can:ver_4')->name('adduser');
 
     Route::get('/users/getUser/{id}', [UserController::class, 'getUser'])->name('users.getUser');
     Route::post('/users/updateUser/{id}', [UserController::class, 'updateUser'])->name('users.updateUser');
-    Route::post('/users/deleteUser/{id}', [UserController::class, 'deleteUser'])->name('users.deleteUser');
+    Route::post('/users/deleteUser/{id}', [UserController::class, 'deleteUser'])->middleware('can:ver_4')->name('users.deleteUser');
 
 
 
@@ -68,12 +69,20 @@ Route::middleware(['auth'])->group(function(){
     Route::post('perfil', [UserController::class, 'update'])->name('perfil.update');
 
     //ROLES
-    Route::get('roles', [RolController::class, 'index'])->name('roles.index');
-    Route::get('roles/data', [RolController::class, 'getData'])->name('roles.data');
-    Route::get('roles/create', [RolController::class, 'create'])->name('roles.create');
-    Route::get('roles/{role}/edit', [UserController::class, 'edit'])->name('roles.edit');
-    Route::delete('roles/{role}', [UserController::class, 'destroy'])->name('roles.destroy');
-    Route::post('roles', [RolController::class, 'create'])->name('roles.store');
+    Route::get('roles', [RolController::class, 'index'])->middleware('can:ver_5')->name('roles.index');
+    Route::get('roles/data', [RolController::class, 'getData'])->middleware('can:ver_5')->name('roles.data');
+    Route::get('roles/create', [RolController::class, 'create'])->middleware('can:ver_5')->name('roles.create');
+    Route::get('roles/{role}/edit', [UserController::class, 'edit'])->middleware('can:ver_5')->name('roles.edit');
+    Route::delete('roles/{role}', [UserController::class, 'destroy'])->middleware('can:ver_5')->name('roles.destroy');
+    Route::post('roles', [RolController::class, 'store'])->middleware('can:ver_5')->name('roles.store');
+
+    //DASHBOARD
+    Route::get('menus', [MenuController::class, 'index'])->middleware('can:ver_3')->name('menus.index');
+    Route::get('menus/data', [MenuController::class, 'getData'])->middleware('can:ver_3')->name('menus.data');    
+    Route::post('addmenu', [MenuController::class, 'addmenu'])->middleware('can:ver_3')->name('addmenu');
+    Route::get('/menus/getMenu/{id}', [MenuController::class, 'getMenu'])->middleware('can:ver_3')->name('menus.getMenu');
+    Route::post('/menus/updateMenu/{id}', [MenuController::class, 'updateMenu'])->middleware('can:ver_3')->name('menus.updateMenu');
+    Route::post('/menus/deleteMenu/{id}', [MenuController::class, 'deleteMenu'])->middleware('can:ver_3')->name('menus.deleteMenu');
     
     
 });

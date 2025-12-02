@@ -8,12 +8,14 @@ use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
     public function index()
     {
-        return view('users.index');
+        $roles = Role::all();
+        return view('users.index', compact('roles'));
     }
 
     public function getData(Request $request)
@@ -41,11 +43,23 @@ class UserController extends Controller
     public function adduser(Request $request)
     {
         try {
-            User::create([
+            // Validar datos + rol
+            $request->validate([
+                'name'     => 'required|string|max:255',
+                'email'    => 'required|email|unique:users,email',
+                'password' => 'required|string|min:6',
+                'role'     => 'required|string', // nombre del rol
+            ]);
+
+            $user = User::create([
                 'name' => $request->name,
                 'email' => $request->email,
                 'password' => Hash::make($request->password),
             ]);
+
+            // Asignar rol al usuario
+            $user->assignRole($request->role);
+            
             return response()->json(['status' => true, 'msg' => 'Usuario registrado']);
         } catch (\Throwable $th) {
             return response()->json(['status' => false, 'msg' => $th->getMessage()]);
@@ -55,7 +69,12 @@ class UserController extends Controller
     public function getUser($id)
     {
         $user = User::findOrFail($id);
-        return response()->json($user);
+        return response()->json([
+            'id'    => $user->id,
+            'name'  => $user->name,
+            'email' => $user->email,
+            'role'  => $user->getRoleNames()->first(), // 🔥 rol asignado
+        ]);
     }
 
     public function updateUser(Request $request, $id)
@@ -67,6 +86,7 @@ class UserController extends Controller
                 'name'  => 'required|string|max:255',
                 'email' => 'required|email|unique:users,email,' . $user->id,
                 'password' => 'nullable|string|min:6',
+                'role'     => 'required|string',
             ]);
 
             $user->name  = $request->name;
@@ -77,6 +97,8 @@ class UserController extends Controller
             }
 
             $user->save();
+
+            $user->syncRoles([$request->role]);
 
             return response()->json(['status' => true, 'msg' => 'Usuario actualizado']);
 

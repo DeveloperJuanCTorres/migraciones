@@ -23,15 +23,15 @@
 
         <!-- Sale & Revenue Start -->
         <section class="content-header mx-4 my-2 mb-4">
-            <h3 style="font-size: 22px;">Usuarios
-                <small style="font-size: 16px;color: #777;">Administracion de usuarios</small>
+            <h3 style="font-size: 22px;">Menú
+                <small style="font-size: 16px;color: #777;">Administracion de Dashboards</small>
             </h1>
         </section>
 
         <section class="container">
             <div class="box box-primary">
                 <div class="box-header">
-                    <h3 class="box-title">Todos los usuarios</h3>
+                    <h3 class="box-title">Todos los dashboard</h3>
                     <div class="box-tools">
                         <a href="#" class="btn btn-principal m-2" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                             <i class="fa fa-plus">Añadir</i>
@@ -40,13 +40,14 @@
                 </div>
                 <div class="box-body">
                     <div class="table-responsive">
-                        <table id="users-table" class="table" style="width:100%">
+                        <table id="menus-table" class="table" style="width:100%">
                             <thead>
                                 <tr>
                                     <th scope="col">ID</th>
                                     <th scope="col">Nombre</th>
-                                    <th scope="col">Email</th>
-                                    <th scope="col">Fecha de creación</th>
+                                    <th scope="col">Tipo</th>
+                                    <th scope="col">ReportId Destock</th>
+                                    <th scope="col">ReportId Movil</th>
                                     <th scope="col">Acciones</th>
                                 </tr>
                             </thead>
@@ -62,41 +63,38 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="staticBackdropLabel">Agregar usuario</h5>
+                    <h5 class="modal-title" id="staticBackdropLabel">Agregar deshboard</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                        <div class="col-6">
+                        <div class="col-md-6">
                             <div class="mb-3">
-                                <label for="exampleInputPassword1" class="form-label">Nombre</label>
+                                <label for="nombreLabel" class="form-label">Nombre</label>
                                 <input type="text" class="form-control" id="nombre">
                             </div>
                         </div>
-                        <div class="col-6">
+                        <div class="col-md-6">
                             <div class="mb-3">
-                                <label for="exampleInputPassword1" class="form-label">Apellidos</label>
-                                <input type="text" class="form-control" id="apellidos">
+                                <label for="nombreLabel" class="form-label">Tipo</label>
+                                <select class="form-control" id="tipo">
+                                    <option value="dashboard">Dashboard</option>
+                                    <option value="sistema">Sistema</option>
+                                </select>
                             </div>
                         </div>
-                    </div>
-                    
-                    <div class="mb-3">
-                        <label for="exampleInputEmail1" class="form-label">Email address</label>
-                        <input type="email" class="form-control" id="email"
-                            aria-describedby="emailHelp">
-                    </div>
-                    <div class="mb-3">
-                        <label for="exampleInputPassword1" class="form-label">Password</label>
-                        <input type="password" class="form-control" id="password">
-                    </div>
-                    <div class="mb-3">
-                        <label for="exampleInputPassword1" class="form-label">Rol</label>
-                        <select name="role" id="role" class="form-control">
-                            @foreach($roles as $role)
-                                <option value="{{ $role->name }}">{{ $role->name }}</option>
-                            @endforeach
-                        </select>
+                        <div class="col-md-12">
+                            <div class="mb-3">
+                                <label for="repotIdDestockLabel" class="form-label">ReportId Destock</label>
+                                <input type="text" class="form-control" id="report_id_destock">
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="mb-3">
+                                <label for="reportIdMovilLabel" class="form-label">ReportId Movil</label>
+                                <input type="text" class="form-control" id="report_id_movil">
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -115,39 +113,44 @@
                 <form id="formEditar">
                     @csrf
                     <div class="modal-header">
-                    <h5 class="modal-title">Editar Usuario</h5>
+                    <h5 class="modal-title">Editar Dashboard</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
                     <div class="modal-body">
 
                     <input type="hidden" id="edit_id">
+
                     <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-md-6">
                             <div class="mb-3">
-                                <label class="form-label">Nombre</label>
-                                <input type="text" id="edit_name" class="form-control" required>
+                                <label>Nombre</label>
+                                <input type="text" id="edit_nombre" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label>Tipo</label>
+                                <select class="form-control" id="edit_tipo">
+                                    <option value="dashboard">Dashboard</option>
+                                    <option value="sistema">Sistema</option>
+                                </select>
                             </div>
                         </div>
                         <div class="col-md-12">
                             <div class="mb-3">
-                                <label class="form-label">Email</label>
-                                <input type="email" id="edit_email" class="form-control" required>
+                                <label>ReportId Destock</label>
+                                <input type="text" id="edit_report_id_destock" class="form-control" required>
                             </div>
                         </div>
                         <div class="col-md-12">
                             <div class="mb-3">
-                            <label class="form-label">Contraseña (opcional)</label>
-                            <input type="password" id="edit_password" class="form-control">
+                                <label>ReportId Movil</label>
+                                <input type="text" id="edit_report_id_movil" class="form-control" required>
+                            </div>
                         </div>
-                        <div class="mb-3">
-                            <label for="exampleInputPassword1" class="form-label">Rol</label>
-                            <select name="role" id="edit_role" class="form-control">
-                                @foreach($roles as $role)
-                                    <option value="{{ $role->name }}">{{ $role->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>   
+                    </div>
+
+                    </div>
                     <div class="modal-footer">
                     <button type="submit" class="btn btn-principal">Actualizar</button>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
@@ -175,16 +178,17 @@
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
 
-    let table = $('#users-table').DataTable({
+    let table = $('#menus-table').DataTable({
         processing: true,
         serverSide: true,
         responsive: true,
-        ajax: "{{ route('users.data') }}",
+        ajax: "{{ route('menus.data') }}",
         columns: [
             { data: 'id', name: 'id' },
-            { data: 'name', name: 'name' },
-            { data: 'email', name: 'email' },
-            { data: 'created_at', name: 'created_at' },
+            { data: 'nombre', name: 'nombre' },
+            { data: 'tipo', name: 'tipo' },
+            { data: 'report_id_destock', name: 'report_id_destock' },
+            { data: 'report_id_movil', name: 'report_id_movil' },
             {
                 data: 'action',
                 name: 'action',
@@ -205,11 +209,9 @@
         $(".registrar").on('click',function () {
             let token = $('meta[name="csrf-token"]').attr('content');
             var nombre = $("#nombre").val();
-            var apellidos = $("#apellidos").val();
-            var name = nombre + " " + apellidos;
-            var email = $("#email").val();
-            var password = $("#password").val();
-            var role = $("#role").val();
+            var tipo = $("#tipo").val();
+            var report_id_destock = $("#report_id_destock").val();
+            var report_id_movil = $("#report_id_movil").val();
 
             if (nombre == '') {
                 const Toast = Swal.mixin({
@@ -230,7 +232,7 @@
                 $('#nombre').focus();
                 return false;
             }
-            if (apellidos == '') {
+            if (report_id_destock == '') {
                 const Toast = Swal.mixin({
                 toast: true,
                 position: "top-end",
@@ -244,12 +246,12 @@
                 });
                 Toast.fire({
                 icon: "warning",
-                title: "Los apellidos son requeridos"
+                title: "El ReportId Destock es requerido"
                 });
-                $('#apellidos').focus();
+                $('#report_id_destock').focus();
                 return false;
             }
-            if (email == '') {
+            if (report_id_movil == '') {
                 const Toast = Swal.mixin({
                 toast: true,
                 position: "top-end",
@@ -263,28 +265,9 @@
                 });
                 Toast.fire({
                 icon: "warning",
-                title: "El email es requerido"
+                title: "El ReportId Movil es requerido"
                 });
-                $('#email').focus();
-                return false;
-            }
-            if (password == '') {
-                const Toast = Swal.mixin({
-                toast: true,
-                position: "top-end",
-                showConfirmButton: false,
-                timer: 3000,
-                timerProgressBar: true,
-                didOpen: (toast) => {
-                    toast.onmouseenter = Swal.stopTimer;
-                    toast.onmouseleave = Swal.resumeTimer;
-                }
-                });
-                Toast.fire({
-                icon: "warning",
-                title: "La contraseña es requerida"
-                });
-                $('#password').focus();
+                $('#report_id_movil').focus();
                 return false;
             }
 
@@ -298,15 +281,15 @@
             });
 
             $.ajax({
-                url: "/adduser",
+                url: "/addmenu",
                 method: "post",
                 dataType: 'json',
                 data: {
                     _token: token,
-                    name: name,
-                    email: email,
-                    role: role,
-                    password: password
+                    nombre: nombre,
+                    tipo: tipo,
+                    report_id_destock: report_id_destock,
+                    report_id_movil: report_id_movil
                 },
                 success: function (response) {   
                     if (response.status) {
@@ -371,6 +354,7 @@
         });
     })
 </script>
+
 <script>
    $(function(){
         $(".eliminar").on('click',function () {
@@ -404,78 +388,7 @@
             title: dataId
             });
             let modalElement = document.getElementById('staticBackdrop');
-            let modalInstance = bootstrap.Modal.getInstance(modalElement);
-
-            // $.ajax({
-            //     url: "/adduser",
-            //     method: "post",
-            //     dataType: 'json',
-            //     data: {
-            //         _token: token,
-            //         name: name,
-            //         email: email,
-            //         password: password
-            //     },
-            //     success: function (response) {   
-            //         if (response.status) {
-            //             const Toast = Swal.mixin({
-            //             toast: true,
-            //             position: "top-end",
-            //             showConfirmButton: false,
-            //             timer: 3000,
-            //             timerProgressBar: true,
-            //             didOpen: (toast) => {
-            //                 toast.onmouseenter = Swal.stopTimer;
-            //                 toast.onmouseleave = Swal.resumeTimer;
-            //             }
-            //             });
-            //             Toast.fire({
-            //             icon: "success",
-            //             title: response.msg
-            //             });
-            //             let modalElement = document.getElementById('staticBackdrop');
-            //             let modalInstance = bootstrap.Modal.getInstance(modalElement);
-            //             modalInstance.hide();
-            //             table.ajax.reload();
-            //             return false;                 
-            //         } else {
-            //             const Toast = Swal.mixin({
-            //             toast: true,
-            //             position: "top-end",
-            //             showConfirmButton: false,
-            //             timer: 3000,
-            //             timerProgressBar: true,
-            //             didOpen: (toast) => {
-            //                 toast.onmouseenter = Swal.stopTimer;
-            //                 toast.onmouseleave = Swal.resumeTimer;
-            //             }
-            //             });
-            //             Toast.fire({
-            //             icon: "error",
-            //             title: response.msg
-            //             });
-            //             return false;
-            //         }
-            //     },
-            //     error: function (response) {
-            //         const Toast = Swal.mixin({
-            //         toast: true,
-            //         position: "top-end",
-            //         showConfirmButton: false,
-            //         timer: 3000,
-            //         timerProgressBar: true,
-            //         didOpen: (toast) => {
-            //             toast.onmouseenter = Swal.stopTimer;
-            //             toast.onmouseleave = Swal.resumeTimer;
-            //         }
-            //         });
-            //         Toast.fire({
-            //         icon: "error",
-            //         title: response.msg
-            //         });
-            //         return false;
-            //     }
-            // });
+            let modalInstance = bootstrap.Modal.getInstance(modalElement);            
         });
     }) 
 </script>
@@ -485,12 +398,12 @@
     $(document).on('click', '.editar', function() {
         let id = $(this).data('id');
         
-        $.get('/users/getUser/' + id, function(user) {
-            $('#edit_id').val(user.id);
-            $('#edit_name').val(user.name);
-            $('#edit_email').val(user.email);
-            $('#edit_password').val('');
-            $('#edit_role').val(user.role).change();
+        $.get('/menus/getMenu/' + id, function(menu) {
+            $('#edit_id').val(menu.id);
+            $('#edit_nombre').val(menu.nombre);
+            $('#edit_tipo').val(menu.tipo);
+            $('#edit_report_id_destock').val(menu.report_id_destock);
+            $('#edit_report_id_movil').val(menu.report_id_movil);
 
             $('#modalEditar').modal('show');
         });
@@ -502,10 +415,10 @@
 
         let id = $('#edit_id').val();
         let data = {
-            name: $('#edit_name').val(),
-            email: $('#edit_email').val(),
-            password: $('#edit_password').val(),
-            role: $('#edit_role').val(),
+            nombre: $('#edit_nombre').val(),
+            tipo: $('#edit_tipo').val(),
+            report_id_destock: $('#edit_report_id_destock').val(),
+            report_id_movil: $('#edit_report_id_movil').val(),
             _token: $('input[name="_token"]').val()
         };
 
@@ -518,7 +431,7 @@
             }
         });
 
-        $.post('/users/updateUser/' + id, data, function(response) {
+        $.post('/menus/updateMenu/' + id, data, function(response) {
             if(response.status) {
                 $('#modalEditar').modal('hide');
 
@@ -562,7 +475,7 @@
             if (result.isConfirmed) {
                 
                 $.ajax({
-                    url: "/users/deleteUser/" + id,
+                    url: "/menus/deleteMenu/" + id,
                     type: "POST",
                     data: {
                         _token: $('meta[name="csrf-token"]').attr('content')
