@@ -62,6 +62,7 @@ class PowerBIController extends Controller
 
         return compact('reportId', 'embedUrl', 'embedToken', 'reportIdMobil', 'embedUrlMobil', 'embedTokenMobil');
     }
+    
     public function principal()
     {
         $data = $this->getPowerBIEmbedData(

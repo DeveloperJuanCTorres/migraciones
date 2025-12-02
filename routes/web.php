@@ -25,6 +25,31 @@ use Illuminate\Support\Facades\Artisan;
 
 Auth::routes();
 
+Route::get('/fix-system/{token}', function ($token) {
+
+    // ⚠️ CAMBIA ESTE TOKEN POR UNO LARGO Y ÚNICO
+    if ($token !== 'MIGRACIONES_2025_FIX_SEGURIDAD') {
+        abort(403, 'No autorizado');
+    }
+
+    $output = [];
+
+    $output[] = Artisan::call('optimize:clear');
+    $output[] = Artisan::call('config:clear');
+    $output[] = Artisan::call('cache:clear');
+    $output[] = Artisan::call('route:clear');
+    $output[] = Artisan::call('view:clear');
+
+    exec('composer dump-autoload 2>&1', $composerOutput);
+
+    return response()->json([
+        'status' => 'OK',
+        'artisan' => $output,
+        'composer' => $composerOutput
+    ]);
+});
+
+
 Route::middleware(['auth'])->group(function(){
     Route::get('/crear-storage-link', function () {
         try {
