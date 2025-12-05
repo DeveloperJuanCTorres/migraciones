@@ -5,7 +5,7 @@
 <style>
 .forgot-bg {
     min-height: 100vh;
-    background-image: url("{{ asset('assets/img/migraciones-fondo.jpeg') }}");
+    background-image: url("{{ asset('assets/img/fondo1.jpeg') }}");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -14,7 +14,7 @@
 .forgot-overlay {
     min-height: 100vh;
     width: 100%;
-    /* background-color: rgba(0, 0, 0, 0.55); */
+    background-color: rgba(0, 0, 0, 0.45);
 }
 </style>
 
