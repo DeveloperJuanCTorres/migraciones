@@ -59,15 +59,6 @@ Route::middleware(['auth'])->group(function(){
             return 'Error: ' . $e->getMessage();
         }
     });
-
-    // Route::get('/', [HomeController::class, 'index'])->name('home');
-    // Route::get('/soporte', [HomeController::class, 'soporte'])->name('soporte');
-    // Route::get('/especialista', [HomeController::class, 'especialista'])->name('especialista');
-    // Route::get('/localizacion', [HomeController::class, 'localizacion'])->name('localizacion');
-    // Route::get('/indicador', [HomeController::class, 'indicador'])->name('indicador');
-    // Route::get('/tickets', [HomeController::class, 'tickets'])->name('tickets');
-    // Route::get('/kpi', [HomeController::class, 'kpi'])->name('kpi');
-    // Route::get('/azure', [HomeController::class, 'azure'])->name('azure');
     
     Route::get('/', [PowerBIController::class, 'principal'])->middleware('can:ver_6');
     Route::get('/soporte', [PowerBIController::class, 'soporte'])->middleware('can:ver_7')->name('soporte');
@@ -78,14 +69,14 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/kpi', [PowerBIController::class, 'kpi'])->middleware('can:ver_12')->name('kpi');
 
     //USERS
-    Route::get('users', [UserController::class, 'index'])->name('users.index');
-    Route::get('users/data', [UserController::class, 'getData'])->name('users.data');
+    Route::get('users', [UserController::class, 'index'])->middleware('can:ver_4')->name('users.index');
+    Route::get('users/data', [UserController::class, 'getData'])->middleware('can:ver_4')->name('users.data');
     // Route::get('users/{user}/edit', [UserController::class, 'edit'])->name('users.edit');
     Route::delete('users/{user}', [UserController::class, 'destroy'])->middleware('can:ver_4')->name('users.destroy');
     Route::post('adduser', [UserController::class, 'adduser'])->middleware('can:ver_4')->name('adduser');
 
-    Route::get('/users/getUser/{id}', [UserController::class, 'getUser'])->name('users.getUser');
-    Route::post('/users/updateUser/{id}', [UserController::class, 'updateUser'])->name('users.updateUser');
+    Route::get('/users/getUser/{id}', [UserController::class, 'getUser'])->middleware('can:ver_4')->name('users.getUser');
+    Route::post('/users/updateUser/{id}', [UserController::class, 'updateUser'])->middleware('can:ver_4')->name('users.updateUser');
     Route::post('/users/deleteUser/{id}', [UserController::class, 'deleteUser'])->middleware('can:ver_4')->name('users.deleteUser');
 
 
