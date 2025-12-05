@@ -1,47 +1,85 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Reset Password') }}</div>
 
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
+<style>
+.forgot-bg {
+    min-height: 100vh;
+    background-image: url("{{ asset('assets/img/migraciones-fondo.jpeg') }}");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
 
-                    <form method="POST" action="{{ route('password.email') }}">
-                        @csrf
+.forgot-overlay {
+    min-height: 100vh;
+    width: 100%;
+    /* background-color: rgba(0, 0, 0, 0.55); */
+}
+</style>
 
-                        <div class="row mb-3">
-                            <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email Address') }}</label>
+<div class="container-fluid forgot-bg p-0 m-0">
+    <div class="row h-100 align-items-center justify-content-center forgot-overlay g-0">
+        <div class="col-12 col-sm-8 col-md-6 col-lg-5 col-xl-4">
+            <div class="bg-secondary rounded p-4 p-sm-5 my-4 mx-3">
 
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
-
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="row mb-0">
-                            <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Send Password Reset Link') }}
-                                </button>
-                            </div>
-                        </div>
-                    </form>
+                {{-- LOGO --}}
+                <div class="text-center mb-4">
+                    <a href="/">
+                        <img src="{{ asset('assets/img/migraciones.png') }}" alt="Logo" style="height: 65px;">
+                    </a>
+                    <h3 class="mt-3 text-white">Recuperar Contraseña</h3>
+                    <small class="text-light">
+                        Ingresa tu correo y te enviaremos el enlace de recuperación
+                    </small>
                 </div>
+
+                {{-- MENSAJE DE ESTADO --}}
+                @if (session('status'))
+                    <div class="alert alert-success text-center" role="alert">
+                        {{ session('status') }}
+                    </div>
+                @endif
+
+                {{-- FORM --}}
+                <form method="POST" action="{{ route('password.email') }}">
+                    @csrf
+
+                    {{-- EMAIL --}}
+                    <div class="form-floating mb-4">
+                        <input id="email" 
+                               type="email" 
+                               name="email"
+                               value="{{ old('email') }}"
+                               class="form-control @error('email') is-invalid @enderror" 
+                               placeholder="correo@correo.com"
+                               required 
+                               autocomplete="email" 
+                               autofocus>
+                        <label for="email">Correo electrónico</label>
+
+                        @error('email')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                        @enderror
+                    </div>
+
+                    {{-- BUTTON --}}
+                    <button type="submit" class="btn btn-primary py-3 w-100 mb-3">
+                        Enviar enlace de recuperación
+                    </button>
+
+                    {{-- VOLVER --}}
+                    <a href="{{ route('login') }}" class="btn btn-link d-block text-center text-white">
+                        Volver al login
+                    </a>
+
+                </form>
+
             </div>
         </div>
     </div>
 </div>
+
 @endsection

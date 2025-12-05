@@ -1,4 +1,22 @@
 @extends('layouts.app')
+<style>
+    .login-bg {
+        min-height: 100vh;
+        background-image: url("{{ asset('assets/img/migraciones-fondo.jpeg') }}");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+    .login-overlay {
+        min-height: 100vh;
+        width: 100vw;
+        /* background-color: rgba(0, 0, 0, 0.15); */
+        margin: 0;
+        padding: 0;
+    }
+</style>
 
 @section('content')
 
@@ -13,15 +31,15 @@
 
 
     <!-- Sign In Start -->
-    <div class="container-fluid">
-        <div class="row h-100 align-items-center justify-content-center" style="min-height: 100vh;">
+    <div class="container-fluid login-bg">
+        <div class="row h-100 align-items-center justify-content-center login-overlay g-0" style="min-height: 100vh;">
             <div class="col-12 col-sm-8 col-md-6 col-lg-5 col-xl-4">
                 <div class="bg-secondary rounded p-4 p-sm-5 my-4 mx-3">
-                    <div class="d-flex align-items-center justify-content-between mb-3">
-                        <a href="index.html" class="">
-                            <img src="{{asset('assets/img/migraciones.png')}}" alt="" style="height: 60px;">
+                    <div class="text-center mb-3">
+                        <a href="/" class="">
+                            <img src="{{asset('assets/img/migraciones.png')}}" alt="" style="height: 80px;">
                         </a>
-                        <h3>Login</h3>
+                        <!-- <h3 class="text-white">Login</h3> -->
                     </div>
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
@@ -49,11 +67,11 @@
                                 <input type="checkbox" class="form-check-input" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
                                 <label class="form-check-label" for="exampleCheck1">Recordar</label>
                             </div>
-                            <a href="">Olvidé la contraseña</a>
+                            <!-- <a href="">Olvidé la contraseña</a> -->
                         </div>
                         <button type="submit" class="btn btn-primary py-3 w-100 mb-4">Iniciar Sesión</button>
                         @if (Route::has('password.request'))
-                            <a class="btn btn-link d-block text-center" href="{{ route('password.request') }}">
+                            <a class="btn btn-link d-block text-center text-white" href="{{ route('password.request') }}">
                                 Olvidaste la contraseña?
                             </a>
                         @endif
