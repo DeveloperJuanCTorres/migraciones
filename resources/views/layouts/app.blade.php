@@ -16,7 +16,13 @@
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
  
     <!-- Favicon -->
-    <link href="img/favicon.ico" rel="icon">
+    <link href="logos/favicon.ico" rel="icon">
+
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('logos/16x16.png') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('logos/32x32.png') }}">
+    <link rel="icon" type="image/png" sizes="192x192" href="{{ asset('logos/192x192.png') }}">
+    <link rel="icon" type="image/png" sizes="512x512" href="{{ asset('logos/512x512.png') }}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('logos/apple-touch-icon.png') }}">
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
