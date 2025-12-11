@@ -17,7 +17,7 @@
                 </a>
                 <div class="dropdown-menu dropdown-menu-end bg-secondary border-0 rounded-0 rounded-bottom m-0">
                     <a href="/perfil" class="dropdown-item">Perfil</a>
-                    <a href="#" class="dropdown-item">Configuración</a>
+                    <!-- <a href="#" class="dropdown-item">Configuración</a> -->
                     <form method="POST" action="{{ route('logout') }}" x-data>
                         @csrf
                         <input type="submit" class="dropdown-item" value="Cerrar sesion">

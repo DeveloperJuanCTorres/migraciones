@@ -5,9 +5,58 @@
                 <img src="{{asset('assets/img/migraciones.png')}}" alt="" style="height: 60px;">
             </a>
 
-            <div class="navbar-nav w-100">
+            <div class="navbar-nav w-100">        
+            
 
-         
+            {{-- PRINCIPAL --}}
+            @can('ver_6')
+            <a href="/" class="nav-item nav-link {{ Request::is('/') ? 'active' : '' }}">
+                <i class="fa fa-tachometer-alt me-2 icolor"></i>PRINCIPAL
+            </a>
+            @endcan
+
+            {{-- DETALLE --}}
+            @can('ver_7')
+            <a href="/soporte" class="nav-item nav-link {{ Request::is('soporte') ? 'active' : '' }}">
+                <i class="fa fa-laptop me-2 icolor"></i>DETALLE
+            </a>
+            @endcan
+
+            {{-- ESPECIALISTA --}}
+            @can('ver_8')
+            <a href="/especialista" class="nav-item nav-link {{ Request::is('especialista') ? 'active' : '' }}">
+                <i class="fa fa-th me-2 icolor"></i>ESPECIALISTA
+            </a>
+            @endcan
+
+            {{-- INDICADOR --}}
+            @can('ver_10')
+            <a href="/indicador" class="nav-item nav-link {{ Request::is('indicador') ? 'active' : '' }}">
+                <i class="fa fa-table me-2 icolor"></i>INDICADOR
+            </a>
+            @endcan
+
+            {{-- LOCALIZACIÓN --}}
+            @can('ver_9')
+            <a href="/localizacion" class="nav-item nav-link {{ Request::is('localizacion') ? 'active' : '' }}">
+                <i class="fa fa-map me-2 icolor"></i>LOCALIZACIÓN
+            </a>
+            @endcan            
+
+            {{-- TICKETS --}}
+            @can('ver_11')
+            <a href="/tickets" class="nav-item nav-link {{ Request::is('tickets') ? 'active' : '' }}">
+                <i class="fa fa-chart-bar me-2 icolor"></i>TICKETS
+            </a>
+            @endcan
+
+            {{-- KPI --}}
+            @can('ver_12')
+            <a href="/kpi" class="nav-item nav-link {{ Request::is('kpi') ? 'active' : '' }}">
+                <i class="far fa-file-alt me-2 icolor"></i>KPI
+            </a>
+            @endcan
+
             @if(
                 auth()->user()->can('ver_3') ||
                 auth()->user()->can('ver_4') ||
@@ -51,56 +100,6 @@
                 </div>
             </div>
             @endif
-
-
-            {{-- PRINCIPAL --}}
-            @can('ver_6')
-            <a href="/" class="nav-item nav-link {{ Request::is('/') ? 'active' : '' }}">
-                <i class="fa fa-tachometer-alt me-2 icolor"></i>PRINCIPAL
-            </a>
-            @endcan
-
-            {{-- DETALLE --}}
-            @can('ver_7')
-            <a href="/soporte" class="nav-item nav-link {{ Request::is('soporte') ? 'active' : '' }}">
-                <i class="fa fa-laptop me-2 icolor"></i>DETALLE
-            </a>
-            @endcan
-
-            {{-- ESPECIALISTA --}}
-            @can('ver_8')
-            <a href="/especialista" class="nav-item nav-link {{ Request::is('especialista') ? 'active' : '' }}">
-                <i class="fa fa-th me-2 icolor"></i>ESPECIALISTA
-            </a>
-            @endcan
-
-            {{-- LOCALIZACIÓN --}}
-            @can('ver_9')
-            <a href="/localizacion" class="nav-item nav-link {{ Request::is('localizacion') ? 'active' : '' }}">
-                <i class="fa fa-map me-2 icolor"></i>LOCALIZACIÓN
-            </a>
-            @endcan
-
-            {{-- INDICADOR --}}
-            @can('ver_10')
-            <a href="/indicador" class="nav-item nav-link {{ Request::is('indicador') ? 'active' : '' }}">
-                <i class="fa fa-table me-2 icolor"></i>INDICADOR
-            </a>
-            @endcan
-
-            {{-- TICKETS --}}
-            @can('ver_11')
-            <a href="/tickets" class="nav-item nav-link {{ Request::is('tickets') ? 'active' : '' }}">
-                <i class="fa fa-chart-bar me-2 icolor"></i>TICKETS
-            </a>
-            @endcan
-
-            {{-- KPI --}}
-            @can('ver_12')
-            <a href="/kpi" class="nav-item nav-link {{ Request::is('kpi') ? 'active' : '' }}">
-                <i class="far fa-file-alt me-2 icolor"></i>KPI
-            </a>
-            @endcan
 
         </div>
 

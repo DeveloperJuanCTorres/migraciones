@@ -46,7 +46,7 @@
                             </div>
                             <div class="mb-3">
                                 <label for="exampleInputPassword1" class="form-label">Email</label>
-                                <input type="text" class="form-control" id="email" value="{{ auth()->user()->email }}">
+                                <input type="text" class="form-control" id="email" readonly value="{{ auth()->user()->email }}">
                             </div>
                             <div class="mb-3">
                                 <label for="exampleInputPassword1" class="form-label">Contraseña</label>
