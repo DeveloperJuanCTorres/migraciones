@@ -25,6 +25,26 @@ use Illuminate\Support\Facades\Artisan;
 
 Auth::routes();
 
+Route::get('/fix-nocaptcha', function () {
+
+    // 1. Instalar librería si no existe
+    if (!class_exists(\Anhskohbo\NoCaptcha\NoCaptchaServiceProvider::class)) {
+        shell_exec('composer require anhskohbo/no-captcha');
+    }
+
+    // 2. Reconstruir vendor/autoload
+    shell_exec('composer dump-autoload');
+
+    // 3. Limpiar cachés
+    Artisan::call('config:clear');
+    Artisan::call('cache:clear');
+    Artisan::call('view:clear');
+    Artisan::call('route:clear');
+    Artisan::call('optimize:clear');
+
+    return 'NoCaptcha instalado y cachés limpiadas ✔️';
+});
+
 Route::get('/fix-system/{token}', function ($token) {
 
     // ⚠️ CAMBIA ESTE TOKEN POR UNO LARGO Y ÚNICO
