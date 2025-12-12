@@ -1,75 +1,75 @@
 @extends('layouts.app')
 
 <style>
-html, body {
-    height: 100%;
-}
+    html, body {
+        height: 100%;
+    }
 
-/* CONTENEDOR PRINCIPAL */
-.login-wrapper {
-    min-height: 100vh;
-    width: 100%;
-    display: flex;
-}
-
-/* PANEL IZQUIERDO AZUL */
-.login-left {
-    width: 35%;
-    min-height: 100vh;
-    background-color: #094780 ; /* Azul institucional */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-}
-
-/* LINEA DIVISORIA CELESTE */
-.login-divider {
-    width: 6px;
-    background: linear-gradient(to bottom, #0ea5e9, #0ea5e9);
-}
-.login-divider1 {
-    width: 6px;
-    background: linear-gradient(to bottom, #094780, #094780);
-}
-
-/* IMAGEN DERECHA */
-.login-right {
-    width: 65%;
-    min-height: 100vh;
-    background-image: url("{{ asset('assets/img/migraciones-fondo.jpeg') }}");
-    background-size: cover;
-    background-position: center;
-    position: relative;
-}
-
-/* OVERLAY SOBRE IMAGEN */
-.login-right::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background-color: rgba(0, 0, 0, 0.45);
-}
-
-/* TARJETA LOGIN */
-.login-card {
-    width: 90%;
-    max-width: 400px;
-    z-index: 10;
-    background: #252525;
-}
-
-/* RESPONSIVE */
-@media (max-width: 768px) {
-    .login-left {
+    /* CONTENEDOR PRINCIPAL */
+    .login-wrapper {
+        min-height: 100vh;
         width: 100%;
+        display: flex;
     }
 
-    .login-divider,
-    .login-right {
-        display: none;
+    /* PANEL IZQUIERDO AZUL */
+    .login-left {
+        width: 35%;
+        min-height: 100vh;
+        background-color: #094780 ; /* Azul institucional */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
     }
-}
+
+    /* LINEA DIVISORIA CELESTE */
+    .login-divider {
+        width: 6px;
+        background: linear-gradient(to bottom, #0ea5e9, #0ea5e9);
+    }
+    .login-divider1 {
+        width: 6px;
+        background: linear-gradient(to bottom, #094780, #094780);
+    }
+
+    /* IMAGEN DERECHA */
+    .login-right {
+        width: 65%;
+        min-height: 100vh;
+        background-image: url("{{ asset('assets/img/migraciones-fondo.jpeg') }}");
+        background-size: cover;
+        background-position: center;
+        position: relative;
+    }
+
+    /* OVERLAY SOBRE IMAGEN */
+    .login-right::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-color: rgba(0, 0, 0, 0.45);
+    }
+
+    /* TARJETA LOGIN */
+    .login-card {
+        width: 90%;
+        max-width: 400px;
+        z-index: 10;
+        background: #252525;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+        .login-left {
+            width: 100%;
+        }
+
+        .login-divider,
+        .login-right {
+            display: none;
+        }
+    }
 </style>
 
 @section('content')
@@ -88,6 +88,9 @@ html, body {
             <!-- FORMULARIO -->
             <form method="POST" action="{{ route('login') }}">
                 @csrf
+
+                <!-- TOKEN reCAPTCHA v3 -->
+                <input type="hidden" name="recaptcha_token" id="recaptcha_token">
 
                 <div class="form-floating mb-3">
                     <input id="email" name="email"
@@ -132,5 +135,16 @@ html, body {
     <div class="login-right"></div>
 
 </div>
+
+<!-- SCRIPT DE GOOGLE reCAPTCHA v3 -->
+<script src="https://www.google.com/recaptcha/api.js?render={{ env('NOCAPTCHA_SITEKEY') }}"></script>
+
+<script>
+grecaptcha.ready(function () {
+    grecaptcha.execute('{{ env('NOCAPTCHA_SITEKEY') }}', {action: 'login'}).then(function (token) {
+        document.getElementById('recaptcha_token').value = token;
+    });
+});
+</script>
 
 @endsection

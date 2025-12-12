@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Http\Request;
 
 class LoginController extends Controller
 {
@@ -38,6 +39,36 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
         $this->middleware('auth')->only('logout');
+    }
+
+    public function login(Request $request)
+    {
+        // Validación del formulario
+        $request->validate([
+            'email' => 'required|string',
+            'password' => 'required|string',
+            'recaptcha_token' => 'required|captcha', // << VALIDACION RECAPTCHA v3
+        ]);
+
+        return $this->traitLogin($request);
+    }
+
+    /**
+     * Evitamos conflicto con el trait
+     */
+    protected function traitLogin(Request $request)
+    {
+        return $this->loginTrait($request);
+    }
+
+    /**
+     * Alias del método original del trait AuthenticatesUsers
+     */
+    protected function loginTrait(Request $request)
+    {
+        return $this->attemptLogin($request)
+            ? $this->sendLoginResponse($request)
+            : $this->sendFailedLoginResponse($request);
     }
 
     protected function authenticated()
