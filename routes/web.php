@@ -70,6 +70,14 @@ Route::get('/fix-system/{token}', function ($token) {
 });
 
 
+Route::get('/register', function () {
+    abort(404);
+});
+Route::post('/register', function () {
+    abort(404);
+});
+
+
 Route::middleware(['auth'])->group(function(){
     Route::get('/crear-storage-link', function () {
         try {
